@@ -42,7 +42,7 @@ function Profile() {
         <div className="mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm">
           <Button variant="ghost" className="h-auto gap-1 p-0" onClick={() => { setPeopleTab("connected"); setPeopleOpen(true); }}><b>{count}</b> Connections</Button>
           <Button variant="ghost" className="h-auto p-0" onClick={() => { setPeopleTab("connect"); setPeopleOpen(true); }}>Connected</Button>
-          <Button variant="ghost" className="h-auto p-0" onClick={() => { setPeopleTab("connected"); setPeopleOpen(true); }}>Connected</Button>
+          <Button variant="ghost" className="h-auto p-0" onClick={() => { setPeopleTab("connected"); setPeopleOpen(true); }}>Connect</Button>
           <span><b>{items.length}</b> Posts</span>
         </div>
         {p.bio && <p className="mt-3 max-w-md text-sm">{p.bio}</p>}
