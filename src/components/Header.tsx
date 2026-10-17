@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { Home, Compass, Bell, Menu, Film, Ticket, LogOut, Settings, X } from "lucide-react";
+import { Home, Compass, Bell, Menu, Film, Ticket, LogOut, Settings, X, Heart } from "lucide-react";
 import { Wordmark } from "./Logo";
 import { UserAvatar } from "./UserAvatar";
 import { useAuth } from "@/lib/auth";
@@ -21,6 +21,15 @@ export function Header() {
     queryFn: async () => {
       if (!userId) return 0;
       const { count } = await supabase.from("notifications").select("id", { count: "exact", head: true }).eq("user_id", userId).eq("read", false);
+      return count ?? 0;
+    },
+  });
+  const { data: savedCount = 0 } = useQuery({
+    queryKey: ["savedCount", userId],
+    enabled: !!userId,
+    queryFn: async () => {
+      if (!userId) return 0;
+      const { count } = await supabase.from("saves").select("content_id", { count: "exact", head: true }).eq("user_id", userId);
       return count ?? 0;
     },
   });
@@ -53,6 +62,10 @@ export function Header() {
           <>
             <nav className="hidden items-center gap-1 sm:flex">{nav}</nav>
             <div className="flex items-center gap-1">
+              <Link to="/saved" className={linkCls} activeProps={active} aria-label="Favourites">
+                <Heart className="h-5 w-5" />
+                {savedCount > 0 && <span className="absolute right-1 top-1 grid h-4 min-w-4 place-items-center rounded-full bg-primary px-1 text-[10px] font-bold text-primary-foreground">{savedCount}</span>}
+              </Link>
               {profile && (
                 <Link to="/u/$username" params={{ username: profile.username }} aria-label="Profile" className="rounded-full p-0.5 transition hover:ring-2 hover:ring-primary">
                   <UserAvatar src={profile.avatar_url} name={profile.display_name} size={34} />
