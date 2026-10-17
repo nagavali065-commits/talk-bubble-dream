@@ -33,7 +33,7 @@ export const TRACKS = [
 export const AUDIENCES = [
   { id: "everyone", label: "Everyone", hint: "Anyone on SAC can see this" },
   { id: "connections", label: "Connections", hint: "Only people you're connected with" },
-  { id: "close_friends", label: "Close friends", hint: "Only your close friends list" },
+  { id: "close_friends", label: "Close connections ", hint: "Only your close connections  list" },
 ] as const;
 
 export function filterCss(id: string | null | undefined, adj?: { brightness: number; contrast: number; saturate: number }) {
