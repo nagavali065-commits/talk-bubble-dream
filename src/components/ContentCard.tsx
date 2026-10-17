@@ -129,7 +129,12 @@ export function ContentCard({ c, liked, saved, compact }: { c: Content; liked: b
           {userId === c.author_id && <button onClick={remove} aria-label="Delete" className="text-muted-foreground hover:text-destructive"><Trash2 className="h-4 w-4" /></button>}
         </div>
         </div>
-        {(c.type === "post" || c.type === "reel") && c.title && <h3 className="text-lg font-bold leading-tight">{c.title}</h3>}
+        {(c.type === "post" || c.type === "reel") && (c.title || c.description) && (
+          <div className="space-y-1">
+            {c.title && <h3 className="text-lg font-bold leading-tight">{c.title}</h3>}
+            {c.description && <p className="whitespace-pre-wrap break-words text-sm leading-snug"><span className="mr-2 font-semibold">{c.author.username}</span>{c.description}</p>}
+          </div>
+        )}
       </header>
 
       <div className="space-y-3 px-4">
@@ -166,7 +171,6 @@ export function ContentCard({ c, liked, saved, compact }: { c: Content; liked: b
           <Button variant="ghost" size="icon" onClick={toggleSave} className="ml-auto [&_svg]:size-6" aria-label="Save" aria-pressed={isSaved}><Bookmark className={cn(isSaved && "fill-foreground")} /></Button>
         </div>
         <p className="py-1 text-sm font-semibold">{likeCount} likes</p>
-        {(c.type === "post" || c.type === "reel") && <div className="pb-2 text-sm"><span className="mr-2 font-semibold">{c.author.username}</span>{c.description && <span className="whitespace-pre-wrap break-words">{c.description}</span>}</div>}
       </div>
 
       {!compact && (
