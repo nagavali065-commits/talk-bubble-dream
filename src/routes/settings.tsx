@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { UserAvatar } from "@/components/UserAvatar";
+import { AccountVerification } from "@/components/AccountVerification";
 
 type View =
   | "home" | "insights" | "privacy" | "report" | "block" | "close" | "activity" | "favorites"
@@ -90,7 +91,7 @@ function SettingsPage() {
       {v === "accounts" && <Accounts />}
       {v === "policy" && <Doc kind="policy" />}
       {v === "terms" && <Doc kind="terms" />}
-      {v === "verify" && <Verify />}</>}
+      {v === "verify" && <AccountVerification />}</>}
       {!userId && v === "help" && <Help />}{!userId && v === "devices" && <Devices />}{!userId && v === "policy" && <Doc kind="policy" />}{!userId && v === "terms" && <Doc kind="terms" />}
     </div>
   );
@@ -540,31 +541,6 @@ function Accounts() {
       <Button variant="outline" onClick={async () => { await supabase.auth.signOut({ scope: "others" }); toast.success("Logged out of other devices"); }}>
         Log out of all other devices
       </Button>
-    </div>
-  );
-}
-
-/* ---------------- Verification ---------------- */
-function Verify() {
-  const { userId, profile } = useAuth();
-  const [requested, setRequested] = useLocalFlag("verify-requested", userId);
-  const [name, setName] = useState("");
-  const [reason, setReason] = useState("");
-  if (requested)
-    return (
-      <div className="rounded-2xl border border-border bg-card p-6 text-center">
-        <BadgeCheck className="mx-auto mb-3 h-10 w-10 text-primary" />
-        <h3 className="font-bold">Request under review</h3>
-        <p className="mt-1 text-sm text-muted-foreground">We'll notify you once @{profile?.username}'s verification is reviewed.</p>
-        <Button variant="ghost" className="mt-3" onClick={() => setRequested(false)}><X className="mr-1 h-4 w-4" />Cancel request</Button>
-      </div>
-    );
-  return (
-    <div className="space-y-3">
-      <p className="text-sm text-muted-foreground">A verified badge shows people that your account is the authentic presence of who you represent.</p>
-      <Input placeholder="Full legal name" value={name} onChange={(e) => setName(e.target.value)} />
-      <Textarea rows={4} placeholder="Why should this account be verified? Add links to news articles or official pages." value={reason} onChange={(e) => setReason(e.target.value)} />
-      <Button disabled={!name.trim() || !reason.trim()} onClick={() => { setRequested(true); toast.success("Verification request submitted"); }}>Submit request</Button>
     </div>
   );
 }
