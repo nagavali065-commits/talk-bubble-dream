@@ -17,6 +17,7 @@ import { Route as ExploreRouteImport } from './routes/explore'
 import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as ReelsRouteImport } from './routes/reels'
+import { Route as SavedRouteImport } from './routes/saved'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as CIdRouteImport } from './routes/c.$id'
 import { Route as UUsernameRouteImport } from './routes/u.$username'
@@ -61,6 +62,11 @@ const ReelsRoute = ReelsRouteImport.update({
   path: '/reels',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SavedRoute = SavedRouteImport.update({
+  id: '/saved',
+  path: '/saved',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -86,6 +92,7 @@ export interface FileRoutesByFullPath {
   '/messages': typeof MessagesRoute
   '/notifications': typeof NotificationsRoute
   '/reels': typeof ReelsRoute
+  '/saved': typeof SavedRoute
   '/settings': typeof SettingsRoute
   '/c/$id': typeof CIdRoute
   '/u/$username': typeof UUsernameRoute
@@ -99,6 +106,7 @@ export interface FileRoutesByTo {
   '/messages': typeof MessagesRoute
   '/notifications': typeof NotificationsRoute
   '/reels': typeof ReelsRoute
+  '/saved': typeof SavedRoute
   '/settings': typeof SettingsRoute
   '/c/$id': typeof CIdRoute
   '/u/$username': typeof UUsernameRoute
@@ -113,6 +121,7 @@ export interface FileRoutesById {
   '/messages': typeof MessagesRoute
   '/notifications': typeof NotificationsRoute
   '/reels': typeof ReelsRoute
+  '/saved': typeof SavedRoute
   '/settings': typeof SettingsRoute
   '/c/$id': typeof CIdRoute
   '/u/$username': typeof UUsernameRoute
@@ -128,6 +137,7 @@ export interface FileRouteTypes {
     | '/messages'
     | '/notifications'
     | '/reels'
+    | '/saved'
     | '/settings'
     | '/c/$id'
     | '/u/$username'
@@ -141,6 +151,7 @@ export interface FileRouteTypes {
     | '/messages'
     | '/notifications'
     | '/reels'
+    | '/saved'
     | '/settings'
     | '/c/$id'
     | '/u/$username'
@@ -154,6 +165,7 @@ export interface FileRouteTypes {
     | '/messages'
     | '/notifications'
     | '/reels'
+    | '/saved'
     | '/settings'
     | '/c/$id'
     | '/u/$username'
@@ -168,6 +180,7 @@ export interface RootRouteChildren {
   MessagesRoute: typeof MessagesRoute
   NotificationsRoute: typeof NotificationsRoute
   ReelsRoute: typeof ReelsRoute
+  SavedRoute: typeof SavedRoute
   SettingsRoute: typeof SettingsRoute
   CIdRoute: typeof CIdRoute
   UUsernameRoute: typeof UUsernameRoute
@@ -231,6 +244,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReelsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/saved': {
+      id: '/saved'
+      path: '/saved'
+      fullPath: '/saved'
+      preLoaderRoute: typeof SavedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/settings': {
       id: '/settings'
       path: '/settings'
@@ -264,6 +284,7 @@ const rootRouteChildren: RootRouteChildren = {
   MessagesRoute: MessagesRoute,
   NotificationsRoute: NotificationsRoute,
   ReelsRoute: ReelsRoute,
+  SavedRoute: SavedRoute,
   SettingsRoute: SettingsRoute,
   CIdRoute: CIdRoute,
   UUsernameRoute: UUsernameRoute,
