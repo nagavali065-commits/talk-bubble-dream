@@ -77,7 +77,7 @@ function Reel({ c, liked, saved, muted, setMuted }: { c: Content; liked: boolean
   return (
     <section className="relative h-full snap-start snap-always overflow-hidden bg-media text-media-foreground sm:rounded-lg">
       {c.media_url && <video ref={ref} src={c.media_url} poster={c.cover_url ?? undefined} loop muted={muted} playsInline className="h-full w-full object-cover" onClick={(e) => (e.currentTarget.paused ? e.currentTarget.play() : e.currentTarget.pause())} />}
-      {c.title && <div className="absolute inset-x-0 top-0 bg-gradient-to-b from-media/90 to-transparent p-4 pr-16"><h3 className="text-lg font-bold text-shadow-media">{c.title}</h3></div>}
+      {(c.title || c.description) && <div className="absolute inset-x-0 top-0 space-y-1 bg-gradient-to-b from-media/90 to-transparent p-4 pr-16">{c.title && <h3 className="text-lg font-bold text-shadow-media">{c.title}</h3>}{c.description && <p className="line-clamp-3 text-sm leading-snug text-media-foreground/90 text-shadow-media">{c.description}</p>}</div>}
       <Button variant="ghost" size="icon" onClick={() => setMuted(!muted)} className="absolute right-4 top-4 rounded-full bg-media/50 hover:bg-media/70 hover:text-media-foreground" aria-label={muted ? "Unmute reel" : "Mute reel"}>{muted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}</Button>
       <div className="absolute bottom-24 right-3 flex flex-col items-center gap-4 text-xs font-semibold text-shadow-media">
         <div className="flex flex-col items-center gap-1"><Button variant="ghost" size="icon" className="h-11 w-11 hover:bg-media/40 hover:text-media-foreground [&_svg]:size-7" aria-label="Like reel" aria-pressed={isLiked} onClick={like}><Heart className={cn(isLiked && "fill-primary text-primary")} /></Button><span>{count}</span></div>
@@ -93,7 +93,6 @@ function Reel({ c, liked, saved, muted, setMuted }: { c: Content; liked: boolean
           </Link>
           <ConnectButton otherId={c.author_id} />
         </div>
-        {c.description && <p className="line-clamp-2 text-sm text-media-foreground/85">{c.description}</p>}
       </div>
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetContent side="bottom" className="max-h-[70vh] overflow-y-auto">
